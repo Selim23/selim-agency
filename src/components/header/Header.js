@@ -15,7 +15,7 @@ const Header = ({ siteTitle }) => {
     logo:   file(relativePath: {eq: "logo.png"}) {
       childImageSharp {
         fixed(quality: 100, width: 200){
-          ...GatsbyImageSharpFixed_witWebp
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }
