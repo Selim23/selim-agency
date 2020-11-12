@@ -7,7 +7,7 @@ import SEO from "../components/Seo"
 import { Wrapper, Image, BottomEdgeDown, BottomEdgeUp } from "./pageStyles/pageStyles"
 import { COLORS } from '../constants'
 
-const Contact = () => {
+const ContactPage = () => {
     const { wpcontent: {
         pageBy: {
             contactMeta: {
@@ -89,4 +89,4 @@ const Contact = () => {
     )
 }
 
-export default Contact
+export default ContactPage
