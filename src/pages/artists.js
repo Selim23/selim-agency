@@ -9,63 +9,60 @@ import { COLORS } from '../constants'
 const ArtistsPage = () => {
     const {
         wpcontent: {
-            pageBy: { artistsPageMeta: {
+            page: { artistsPageMeta: {
                 artistsPageDescription,
                 artistsPageHeaderPicture
 
             }, },
             artists: {
                 edges: artists
-            },
+            }
         },
     } = useStaticQuery(graphql`
     query{
-        wpcontent{
-            pageBy(uri: "artists") {
+      wpcontent {
+        page(id: "artists", idType: URI) {
           artistsPageMeta {
             artistsPageDescription
             artistsPageHeaderPicture {
-                sourceUrl
-                imageFile {
-                  childImageSharp {
-                    fluid(quality:100, grayscale: true){
-                      ...GatsbyImageSharpFluid_withWebp
-                    }
+              sourceUrl
+              imageFile {
+                childImageSharp {
+                  fluid(quality: 100) {
+                    ...GatsbyImageSharpFluid_withWebp
                   }
                 }
+              }
               altText
             }
           }
         }
         artists {
-            edges {
-              node {
-                artistsMeta {
-                  firstName
-                  lastNameKopie
-                  artistName
-                  profile {
-                    altText
-                    sourceUrl
-                    imageFile {
-                      childImageSharp {
-                        fluid(quality:100, grayscale: true){
-                          ...GatsbyImageSharpFluid_withWebp
-                        }
+          edges {
+            node {
+              artistsMeta {
+                firstName
+                lastNameKopie
+                artistName
+                profile {
+                  altText
+                  sourceUrl
+                  imageFile {
+                    childImageSharp {
+                      fluid(quality: 100, grayscale: true) {
+                        ...GatsbyImageSharpFluid_withWebp
                       }
                     }
                   }
                 }
-                slug
               }
+              slug
             }
           }
         }
-      
       }
-      
-    `)
-
+    }
+  `);
     return (
         <Layout>
             <SEO title="Artists" />
@@ -82,17 +79,17 @@ const ArtistsPage = () => {
                 <div className="artists">
                     <h2>Our Artists</h2>
                     <div className="artist-item">
-                        {artists.map(({ node: { artist, slug } }) => (
+                        {artists.map(({ node: { artistsMeta, slug } }) => (
                             <Artist to={`/${slug}`} key={slug}>
                                 <Image
-                                    fluid={artist.profile.imageFile.childImageSharp.fluid}
-                                    alt={artist.profile.altText}
+                                    fluid={artistsMeta.profile.imageFile.childImageSharp.fluid}
+                                    
                                 />
                                 <div className="artist-info">
                                     <p>
-                                        {artist.firstName} {artist.lastName}
+                                        {artistsMeta.firstName} {artistsMeta.lastName}
                                     </p>
-                                    {artist.artistName && <p>{artist.artistName}</p>}
+                                    {artistsMeta.artistName && <p>{artistsMeta.artistName}</p>}
                                 </div>
                             </Artist>
                         ))}
